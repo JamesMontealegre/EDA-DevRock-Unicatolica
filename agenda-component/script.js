@@ -78,6 +78,36 @@ class ListaDoble {
 
     this.mostrar();
   }
+  buscar(nombre) {
+    let actual = this.head;
+    let encontrados = [];
+    while (actual) {
+      if (actual.nombre.toLowerCase() === nombre.toLowerCase()) {
+        encontrados.push(`Nombre: ${actual.nombre}, Teléfono: ${actual.telefono}`);
+      }
+      actual = actual.next;
+    }
+    if (encontrados.length > 0) {
+      alert("Contactos encontrados:\n" + encontrados.join("\n"));
+    } else {
+      alert("Contacto no encontrado");
+    }
+  }
+
+  mostrar() {
+    const tbody = document.getElementById("tableBody");
+    tbody.innerHTML = "";
+    let actual = this.head;
+    while (actual) {
+      const fila = document.createElement("tr");
+      fila.innerHTML = `
+        <td>${actual.telefono}</td>
+        <td>${actual.nombre}</td>
+      `;
+      tbody.appendChild(fila);
+      actual = actual.next;
+    }
+  }
 }
 
 const agenda = new ListaDoble();
