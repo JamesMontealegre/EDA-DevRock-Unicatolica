@@ -1,24 +1,47 @@
-$(function () {
-  const contactos = [];
+//Parte Cristhian
+class Nodo {
+  constructor(nombre, telefono) {
+    this.nombre = nombre;
+    this.telefono = telefono;
+    this.next = null;
+    this.prev = null;
+  }
+}
 
-  $("#addBtn").on("click", function () {
-    const telefono = $("#indexInput").val().trim();
-    const nombre = $("#valueInput").val().trim();
+class ListaDoble {
+  constructor() {
+    this.head = null;
+    this.tail = null;
+  }
+  
+}
 
-    if (telefono === "" || nombre === "") return;
 
-    contactos.push({ telefono, nombre });
-    renderLista();
+const agenda = new ListaDoble();
 
-    $("#indexInput").val("").focus();
-    $("#valueInput").val("");
-  });
+document.getElementById("addBtn").addEventListener("click", () => {
+  const nombre = document.getElementById("nombreInput").value.trim();
+  const telefono = document.getElementById("telefonoInput").value.trim();
+  if (nombre && telefono) {
+    agenda.agregar(nombre, telefono);
+    document.getElementById("nombreInput").value = "";
+    document.getElementById("telefonoInput").value = "";
+  } else {
+    alert("Debe ingresar ambos campos");
+  }
+});
 
-  function renderLista() {
-    $("#tableBody").empty();
-    contactos.forEach((contacto) => {
-      const row = `<tr><td>${contacto.telefono}</td><td>${contacto.nombre}</td></tr>`;
-      $("#tableBody").append(row);
-    });
+document.getElementById("searchBtn").addEventListener("click", () => {
+  const nombre = prompt("Ingrese el nombre a buscar").trim();
+  if (nombre) agenda.buscar(nombre);
+});
+
+document.getElementById("deleteBtn").addEventListener("click", () => {
+  const inicial = prompt("Ingrese la primera letra del nombre").trim();
+  const telefono = prompt("Ingrese el número de teléfono").trim();
+  if (inicial && telefono) {
+    agenda.eliminarPorInicialYTelefono(inicial, telefono);
+  } else {
+    alert("Debe ingresar ambos datos");
   }
 });
